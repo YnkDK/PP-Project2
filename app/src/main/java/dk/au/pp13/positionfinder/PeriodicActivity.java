@@ -3,22 +3,19 @@ package dk.au.pp13.positionfinder;
 import android.content.Context;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 
-public class PeriodicActivity extends ActionBarActivity {
+public class PeriodicActivity extends AppCompatActivity {
 
     private TextView timeInSecTextview;
     private TextView gpsCoordinates;
     private EditText inputFieldEdittext;
 
-    private long time = 0;
     private LocationManager locationManager = null;
     private GPSListener locationListener = null;
 
@@ -38,9 +35,10 @@ public class PeriodicActivity extends ActionBarActivity {
 
     public void setPeriodicTime(View view) {
         stopGPS(null);
+        gpsCoordinates.setText("");
 
         if(inputFieldEdittext.getText().length() > 0) {
-            time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
+            long time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
             if (time > 0) {
                 timeInSecTextview.setText("Current time interval: " + time + " sec");
                 inputFieldEdittext.setText("");
