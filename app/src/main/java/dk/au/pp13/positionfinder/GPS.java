@@ -12,50 +12,50 @@ import android.util.Log;
  */
 public class GPS implements LocationListener {
     private final Context context;
+    private Location lastKnownLocation;
 
     protected LocationManager locationManager;
 
     public GPS(Context context) {
         this.context = context;
+        this.lastKnownLocation = requestLocationUpdates();
     }
 
-    public GPSData requestLocationUpdates() {
-        GPSData result = null;
+    private Location requestLocationUpdates() {
         do {
             try {
+                // Get the location service from the current context
                 locationManager = (LocationManager) this.context
                         .getSystemService(Context.LOCATION_SERVICE);
+                // Ensure that GPS is enabled
                 boolean isGPSEnabled = this.locationManager
                         .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
                 if (isGPSEnabled) {
-                    Log.d("GPS", "GPS is enabled");
+                    // Request the location
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                     if (locationManager != null) {
+                        // Get last known location
                         Location location = locationManager
                                 .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        Log.d("GPS", "Location: " + location);
                         if (location != null) {
-                            result = new GPSData(
-                                    location.getLatitude(),
-                                    location.getLongitude(),
-                                    location.getAltitude(),
-                                    location.getTime()
-                            );
+                            return location;
                         }
                     }
                 }
             } catch (Exception e) {
-                result = null;
                 Log.e("GPS ERROR", e.getMessage());
             }
-        } while (result == null);
-        return result;
+        } while (true);
+    }
+
+    public Location getLastKnownLocation() {
+        return this.lastKnownLocation;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d("GPS", location.getLatitude() + "");
+        lastKnownLocation = location;
     }
 
     @Override
@@ -71,24 +71,5 @@ public class GPS implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {
 
-    }
-
-
-    public class GPSData {
-        public final double latitude;
-        public final double longitude;
-        public final double altitude;
-        public final long timestamp;
-
-        private GPSData(double latitude, double longitude, double altitude, long timestamp) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.altitude = altitude;
-            this.timestamp = timestamp;
-        }
-
-        public String toString() {
-            return this.longitude + "," + this.latitude + "," + this.altitude + "," + this.timestamp;
-        }
     }
 }
