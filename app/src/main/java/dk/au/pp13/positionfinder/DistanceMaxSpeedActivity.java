@@ -6,12 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class PeriodicActivity extends ActionBarActivity {
+public class DistanceMaxSpeedActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_periodic);
+        setContentView(R.layout.activity_distance_max_speed);
     }
 
 }
