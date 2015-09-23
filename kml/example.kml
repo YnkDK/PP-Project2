@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+
+		<!-- !!!!!!!!!!!!! -->
+		<Style id="seeadler-dot-icon">
+		  <IconStyle>
+			<Icon>
+			  <href>http://dagik.org/kml_intro/E/ball.png</href>
+			</Icon>
+		  </IconStyle>
+		</Style>
+	
+	
+		<Placemark>
+			<TimeStamp>
+			  <when>2005-08-21T09:01:00Z</when>
+			</TimeStamp>
+			<styleUrl>#seeadler-dot-icon</styleUrl>
+			<Point>
+			  <coordinates>-122.0822035425683,37.42228990140251,0</coordinates>
+			</Point>
+		</Placemark>
+		
+		<Placemark>
+			<TimeStamp>
+			  <when>2005-08-21T10:01:00Z</when>
+			</TimeStamp>
+			<styleUrl>#seeadler-dot-icon</styleUrl>
+			<Point>
+			  <coordinates>-122.0022035425683,37.42228990140251,0</coordinates>
+			</Point>
+		</Placemark>
+	</Document>
+</kml>
