@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created by mys on 9/23/15.
@@ -20,30 +21,34 @@ public class GPS implements LocationListener {
 
     public GPSData requestLocationUpdates() {
         GPSData result = null;
-        try {
-            locationManager = (LocationManager) this.context
-                    .getSystemService(Context.LOCATION_SERVICE);
-            boolean isGPSEnabled = this.locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+        do {
+            try {
+                locationManager = (LocationManager) this.context
+                        .getSystemService(Context.LOCATION_SERVICE);
+                boolean isGPSEnabled = this.locationManager
+                        .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            if(isGPSEnabled) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                if (locationManager != null) {
-                    Location location = locationManager
-                            .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location != null) {
-                        result = new GPSData(
-                                location.getLatitude(),
-                                location.getLongitude(),
-                                location.getAltitude(),
-                                location.getTime()
-                        );
+                if (isGPSEnabled) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                    if (locationManager != null) {
+                        Location location = locationManager
+                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                        if (location != null) {
+                            result = new GPSData(
+                                    location.getLatitude(),
+                                    location.getLongitude(),
+                                    location.getAltitude(),
+                                    location.getTime()
+                            );
+                        }
                     }
                 }
+            } catch (Exception e) {
+                result = null;
+                Log.e("GPS ERROR", e.getMessage());
             }
-        } catch (Exception e) {
-            return null;
-        }
+        } while (result == null);
         return result;
     }
 
@@ -68,7 +73,7 @@ public class GPS implements LocationListener {
     }
 
 
-    private class GPSData {
+    public class GPSData {
         public final double latitude;
         public final double longitude;
         public final double altitude;
