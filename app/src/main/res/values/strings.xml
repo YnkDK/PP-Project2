@@ -10,4 +10,9 @@
     <string name="toggle_gps">Toggle GPS</string>
     <string name="naive_reporting">Naive reporting</string>
     <string name="gps_coordinates">GPS coordinates:</string>
+    <string name="max_speed_reporting">Max speed reporting</string>
+    <string name="stop_gps">Stop GPS</string>
+    <string name="max_speed_input">Max speed in km/h</string>
+    <string name="set_max_speed">Set max speed</string>
+    <string name="current_initial_max_speed">Current max speed: N/A</string>
 </resources>
