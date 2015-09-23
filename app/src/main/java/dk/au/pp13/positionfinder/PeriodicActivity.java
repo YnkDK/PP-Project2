@@ -1,5 +1,8 @@
 package dk.au.pp13.positionfinder;
 
+import android.content.Context;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,12 +17,10 @@ public class PeriodicActivity extends ActionBarActivity {
     private TextView timeInSecTextview;
     private TextView gpsCoordinates;
     private EditText inputFieldEdittext;
-    private Thread gpsUpdater;
 
-    private int time = 0;
-    private Handler handler;
-
-    private GPS gps;
+    private long time = 0;
+    private LocationManager locationManager = null;
+    private GPSListener locationListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,61 +31,24 @@ public class PeriodicActivity extends ActionBarActivity {
         this.inputFieldEdittext = (EditText) findViewById(R.id.inputFieldTimeInSec);
         this.gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
         this.timeInSecTextview.setText(time + "");
-        handler = new Handler();
-        gps = null;
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(this.gpsUpdater != null) {
-            this.gpsUpdater.interrupt();
-        }
+        // Get the location service from the current context
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new GPSListener(gpsCoordinates);
     }
 
     public void setPeriodicTime(View view) {
-        if(gps == null) {
-            // This blocks until the first fix is received
-            gps = new GPS(this);
+        if(locationListener != null) {
+            locationManager.removeUpdates(locationListener);
         }
+
         if(inputFieldEdittext.getText().length() > 0)
-            time = Integer.parseInt(String.valueOf(inputFieldEdittext.getText()));
-        if(time > 0) {
-            if(this.gpsUpdater != null) {
-                this.gpsUpdater.interrupt();
-            }
-            this.gpsUpdater = new Thread(new Task());
-            this.gpsUpdater.start();
-        }
-    }
-
-    class Task implements Runnable {
-        @Override
-        public void run() {
-            do {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String gpsCoor = gps.getLastKnownLocation().toString();
-                        gpsCoordinates.setText(gpsCoor);
-
-                    }
-                });
-                try {
-                    Thread.sleep(time);
-                } catch (InterruptedException ignored) {
-                    Log.d("PeriodicActivity", "Interrupted gps updater task");
-                    return;
-                }
-            } while (true);
-        }
-    }
-
-    private void updateLocation() {
-        String gpsCoor = gps.getLastKnownLocation().toString();
-
+            time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
         timeInSecTextview.setText(time + "");
-        inputFieldEdittext.setText("");
-        gpsCoordinates.setText(gpsCoor);
+
+
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time * 1000, 0,
+                locationListener);
     }
 }

@@ -22,31 +22,30 @@ public class GPS implements LocationListener {
     }
 
     private Location requestLocationUpdates() {
-        do {
-            try {
-                // Get the location service from the current context
-                locationManager = (LocationManager) this.context
-                        .getSystemService(Context.LOCATION_SERVICE);
-                // Ensure that GPS is enabled
-                boolean isGPSEnabled = this.locationManager
-                        .isProviderEnabled(LocationManager.GPS_PROVIDER);
+        try {
+            // Get the location service from the current context
+            locationManager = (LocationManager) this.context
+                    .getSystemService(Context.LOCATION_SERVICE);
+            // Ensure that GPS is enabled
+            boolean isGPSEnabled = this.locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-                if (isGPSEnabled) {
-                    // Request the location
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                    if (locationManager != null) {
-                        // Get last known location
-                        Location location = locationManager
-                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (location != null) {
-                            return location;
-                        }
+            if (isGPSEnabled) {
+                // Request the location
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                if (locationManager != null) {
+                    // Get last known location
+                    Location location = locationManager
+                            .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (location != null) {
+                        return location;
                     }
                 }
-            } catch (Exception e) {
-                Log.e("GPS ERROR", e.getMessage());
             }
-        } while (true);
+        } catch (Exception e) {
+            Log.e("GPS ERROR", e.getMessage());
+        }
+        return null;
     }
 
     public Location getLastKnownLocation() {
