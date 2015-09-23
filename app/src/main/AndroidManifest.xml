@@ -23,6 +23,18 @@
             android:name=".PeriodicActivity"
             android:label="@string/title_activity_periodic" >
         </activity>
+        <activity
+            android:name=".DistanceNaiveActivity"
+            android:label="@string/title_activity_distance_naive" >
+        </activity>
+        <activity
+            android:name=".DistanceMaxSpeedActivity"
+            android:label="@string/title_activity_distance_max_speed" >
+        </activity>
+        <activity
+            android:name=".DistanceAccelerometerActivity"
+            android:label="@string/title_activity_distance_accelerometer" >
+        </activity>
     </application>
 
 </manifest>

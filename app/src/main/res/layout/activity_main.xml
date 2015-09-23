@@ -19,5 +19,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/distance_naive_button"
+        android:layout_below="@+id/periodic_button"
+        android:text="Distance Reporting Naive"
+        android:onClick="distance_reporting_naive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/distance_max_speed_button"
+        android:layout_below="@+id/distance_naive_button"
+        android:text="Distance Reporting Max Speed"
+        android:onClick="distance_reporting_max_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/distance_accelerometer_button"
+        android:layout_below="@+id/distance_max_speed_button"
+        android:text="Distance Reporting Accelerometer"
+        android:onClick="distance_reporting_accelerometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

@@ -4,4 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_periodic">PeriodicActivity</string>
+    <string name="title_activity_distance_naive">DistanceNaiveActivity</string>
+    <string name="title_activity_distance_max_speed">DistanceMaxSpeedActivity</string>
+    <string name="title_activity_distance_accelerometer">DistanceAccelerometerActivity</string>
 </resources>
