@@ -36,14 +36,39 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
         if(locationListener != null) {
             locationManager.removeUpdates(locationListener);
         }
+
     }
 
+    /**
+     * Extend the client program to implement distance-based reporting strategy that requests as few GPS
+     * fixes as possible from the built-in GPS by assuming that the phone can only move with a configurable
+     * maximum speed.
+     *
+     * @param view ignored
+     */
     public void setMaxSpeed(View view) {
+        // TODO: Should be configurable
+        // 10 meters in km
+        final double DISTANCE = 10.0 / 1000;
+
         stopGPS(null);
         gpsCoordinates.setText("");
 
         if (inputFieldEdittext.getText().length() > 0) {
-            // TODO: Do something
+            // Speed in km/h
+            long speed = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
+
+            double hours = DISTANCE / speed;
+            long milliseconds = (long) (hours * 3600000);
+
+            maxSpeed.setText("Current max speed: " + speed + " km / t");
+            inputFieldEdittext.setText("");
+            gpsCoordinates.setText("Waiting for GPS signal...");
+
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, milliseconds, 0,
+                    locationListener);
+
         }
     }
 }
