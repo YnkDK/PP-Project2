@@ -37,20 +37,21 @@ public class PeriodicActivity extends ActionBarActivity {
     }
 
     public void setPeriodicTime(View view) {
-        if(locationListener != null) {
-            locationManager.removeUpdates(locationListener);
+        stopGPS(null);
+
+        if(inputFieldEdittext.getText().length() > 0) {
+            time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
+            if (time > 0) {
+                timeInSecTextview.setText("Current time interval: " + time + " sec");
+                inputFieldEdittext.setText("");
+                gpsCoordinates.setText("Waiting for GPS signal...");
+
+
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time * 1000, 0,
+                        locationListener);
+            }
 
         }
-
-        if(inputFieldEdittext.getText().length() > 0)
-            time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
-        timeInSecTextview.setText("Current time interval: " + time + " sec");
-        inputFieldEdittext.setText("");
-
-
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time * 1000, 0,
-                locationListener);
     }
 
     public void stopGPS(View view) {
