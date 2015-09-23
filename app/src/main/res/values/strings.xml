@@ -7,4 +7,7 @@
     <string name="title_activity_distance_naive">DistanceNaiveActivity</string>
     <string name="title_activity_distance_max_speed">DistanceMaxSpeedActivity</string>
     <string name="title_activity_distance_accelerometer">DistanceAccelerometerActivity</string>
+    <string name="toggle_gps">Toggle GPS</string>
+    <string name="naive_reporting">Naive reporting</string>
+    <string name="gps_coordinates">GPS coordinates:</string>
 </resources>
