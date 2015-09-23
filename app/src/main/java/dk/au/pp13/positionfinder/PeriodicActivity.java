@@ -30,7 +30,6 @@ public class PeriodicActivity extends ActionBarActivity {
         this.timeInSecTextview = (TextView) findViewById(R.id.periodicTimeInSec);
         this.inputFieldEdittext = (EditText) findViewById(R.id.inputFieldTimeInSec);
         this.gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
-        this.timeInSecTextview.setText(time + "");
 
         // Get the location service from the current context
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -40,15 +39,23 @@ public class PeriodicActivity extends ActionBarActivity {
     public void setPeriodicTime(View view) {
         if(locationListener != null) {
             locationManager.removeUpdates(locationListener);
+
         }
 
         if(inputFieldEdittext.getText().length() > 0)
             time = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
-        timeInSecTextview.setText(time + "");
+        timeInSecTextview.setText("Current time interval: " + time + " sec");
+        inputFieldEdittext.setText("");
 
 
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time * 1000, 0,
                 locationListener);
+    }
+
+    public void stopGPS(View view) {
+        if(locationListener != null) {
+            locationManager.removeUpdates(locationListener);
+        }
     }
 }

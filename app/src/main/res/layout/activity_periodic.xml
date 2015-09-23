@@ -7,64 +7,55 @@
     android:orientation="vertical"
     tools:context="dk.au.pp13.positionfinder.PeriodicActivity">
 
+
     <TextView
+        android:id="@+id/periodic_text"
         android:text="Periodic reporting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="26sp"
         />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop GPS"
+        android:textAllCaps="false"
+        android:onClick="stopGPS"
+        />
+
     <EditText
         android:id="@+id/inputFieldTimeInSec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Time in seconds"
+        android:hint="Time between fixes in seconds"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:inputType="number"
         />
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set"
+        android:text="Set interval"
+        android:textAllCaps="false"
         android:onClick="setPeriodicTime"
         />
 
     <TextView
+        android:id="@+id/periodicTimeInSec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Current set time intverval:"
         android:textSize="18sp"
+        android:text="Current time interval: 0"
         />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:id="@+id/periodicTimeInSec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@android:color/holo_green_dark"
-            android:text="0"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text=" sec"
-            />
-    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="GPS coordinates:"
         android:textSize="18sp"
+        android:layout_marginTop="10dp"
         />
 
     <TextView
