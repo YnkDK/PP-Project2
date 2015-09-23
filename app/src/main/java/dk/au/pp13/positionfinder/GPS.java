@@ -29,11 +29,12 @@ public class GPS implements LocationListener {
                         .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
                 if (isGPSEnabled) {
+                    Log.d("GPS", "GPS is enabled");
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
                     if (locationManager != null) {
                         Location location = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
+                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        Log.d("GPS", "Location: " + location);
                         if (location != null) {
                             result = new GPSData(
                                     location.getLatitude(),
@@ -54,7 +55,7 @@ public class GPS implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.d("GPS", location.getLatitude() + "");
     }
 
     @Override
