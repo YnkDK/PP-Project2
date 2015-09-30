@@ -20,6 +20,8 @@ public class GPSListener implements LocationListener {
     }
 
     public void setFilter(Filter filter) {
+        // Filter changed, thus we do not have any good fixes
+        this.lastGoodFix = null;
         this.filter = filter;
     }
 
