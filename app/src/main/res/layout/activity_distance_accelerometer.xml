@@ -6,7 +6,21 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="dk.au.pp13.positionfinder.DistanceAccelerometerActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/inputFieldThreshold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Acc. Threshold"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:inputType="number" />
+
+    <Button
+        android:layout_below="@+id/inputFieldThreshold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Threshold"
+        android:textAllCaps="false"
+        android:onClick="setThreshold" />
 
 </RelativeLayout>
