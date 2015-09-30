@@ -1,13 +1,14 @@
 package dk.au.pp13.positionfinder;
 
 import android.content.Context;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import dk.au.pp13.positionfinder.filters.TimeFilter;
 
 
 public class PeriodicActivity extends AppCompatActivity {
@@ -31,10 +32,11 @@ public class PeriodicActivity extends AppCompatActivity {
         // Get the location service from the current context
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+                locationListener);
     }
 
     public void setPeriodicTime(View view) {
-        stopGPS(null);
         gpsCoordinates.setText("");
 
         if(inputFieldEdittext.getText().length() > 0) {
@@ -44,9 +46,9 @@ public class PeriodicActivity extends AppCompatActivity {
                 inputFieldEdittext.setText("");
                 gpsCoordinates.setText("Waiting for GPS signal...");
 
+                locationListener.setFilter(new TimeFilter(time));
 
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time * 1000, 0,
-                        locationListener);
+
             }
 
         }
@@ -54,7 +56,7 @@ public class PeriodicActivity extends AppCompatActivity {
 
     public void stopGPS(View view) {
         if(locationListener != null) {
-            locationManager.removeUpdates(locationListener);
+//            locationManager.removeUpdates(locationListener);
         }
     }
 }
