@@ -79,6 +79,8 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     public void setDistance(View view) {
         if (editFieldDistance.getText().length() > 0) {
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
+            locationListener.setLogger(new HTTPFix("Accelerometer-distance" + distance));
+
             filter = new AccelerometerFilter(distance);
             this.locationListener.setFilter(filter);
 

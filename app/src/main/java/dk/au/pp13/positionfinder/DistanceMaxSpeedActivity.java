@@ -58,6 +58,7 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
 
             maxSpeed.setText("Current max speed: " + speed + " km / t");
             maxDistance.setText("Current distance threshold: " + distance + " meters");
+            locationListener.setLogger(new HTTPFix("MaxSpeed-speed" + speed + "-distance" + distance));
 
             this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
             gpsCoordinates.setText("Waiting for GPS signal...");

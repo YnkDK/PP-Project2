@@ -38,6 +38,8 @@ public class DistanceNaiveActivity extends ActionBarActivity {
     public void setDistance(View view) {
         if (editFieldDistance.getText().length() > 0) {
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
+            locationListener.setLogger(new HTTPFix("DistanceNaive-distance" + distance));
+
             this.locationListener.setFilter(new HaversineFilter(distance));
 
             maxDistance.setText("Current distance threshold: " + distance + " meters");

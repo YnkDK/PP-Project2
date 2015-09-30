@@ -46,8 +46,9 @@ public class PeriodicActivity extends AppCompatActivity {
                 inputFieldEdittext.setText("");
                 gpsCoordinates.setText("Waiting for GPS signal...");
 
-                locationListener.setFilter(new TimeFilter(time));
+                locationListener.setLogger(new HTTPFix("Periodic-interval" + time));
 
+                locationListener.setFilter(new TimeFilter(time));
 
             }
 

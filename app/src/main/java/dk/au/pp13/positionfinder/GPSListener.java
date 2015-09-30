@@ -15,6 +15,7 @@ public class GPSListener implements LocationListener {
 
     private TextView textView;
     private Location lastGoodFix;
+    private HTTPFix logger;
 
     public GPSListener(TextView view) {
         this.textView = view;
@@ -32,6 +33,8 @@ public class GPSListener implements LocationListener {
         if (lastGoodFix == null || filter.passesFilter(lastGoodFix, location)) {
             textView.setText(location.toString());
             lastGoodFix = location;
+
+            logger.log(location);
         }
     }
 
@@ -48,5 +51,9 @@ public class GPSListener implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public void setLogger(HTTPFix logger) {
+        this.logger = logger;
     }
 }

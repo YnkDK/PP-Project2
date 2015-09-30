@@ -26,6 +26,7 @@ public class WaypointCollectorActivity extends ActionBarActivity {
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
+        locationListener.setLogger(new HTTPFix("Waypoint"));
         locationListener.setFilter(new ImpenetrableFilter());
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
