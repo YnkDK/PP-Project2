@@ -18,12 +18,9 @@ import dk.au.pp13.positionfinder.filters.AccelerometerFilter;
 public class DistanceAccelerometerActivity extends ActionBarActivity implements SensorEventListener {
 
     private float lastX = 0, lastY = 0, lastZ = 0;
-    private final float THRESHOLD = 4;
     private AccelerometerFilter filter;
-    private TextView gpsCoordinates;
     private TextView maxDistance;
     private EditText editFieldDistance;
-    private LocationManager locationManager;
     private GPSListener locationListener;
     private TextView movementBool;
 
@@ -38,14 +35,14 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
 
         filter = null;
 
-        gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
+        TextView gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
         maxDistance = (TextView) findViewById(R.id.maxDistance);
         movementBool = (TextView) findViewById(R.id.movementBool);
         editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
 
         gpsCoordinates.setText("Waiting for GPS...");
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
@@ -54,6 +51,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        final float THRESHOLD = 4;
         if (Math.abs(lastX - sensorEvent.values[0]) > THRESHOLD ||
                 Math.abs(lastY - sensorEvent.values[1]) > THRESHOLD ||
                 Math.abs(lastZ - sensorEvent.values[2]) > THRESHOLD) {

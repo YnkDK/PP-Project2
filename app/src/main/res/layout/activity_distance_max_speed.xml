@@ -15,14 +15,6 @@
         android:textSize="26sp"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stop_gps"
-        android:textAllCaps="false"
-        android:onClick="stopGPS"
-        />
-
     <EditText
         android:id="@+id/inputFieldTimeInSec"
         android:layout_width="match_parent"

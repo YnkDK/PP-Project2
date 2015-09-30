@@ -19,13 +19,6 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/toggle_gps"
-        android:textAllCaps="false"
-        android:onClick="toggleGPS" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/collect"
         android:textAllCaps="false"
         android:onClick="collect" />

@@ -15,7 +15,6 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
     private TextView maxSpeed;
     private TextView gpsCoordinates;
     private EditText inputFieldEdittext;
-    private LocationManager locationManager;
     private GPSListener locationListener;
     private TextView maxDistance;
     private EditText editFieldDistance;
@@ -33,14 +32,9 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
         editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
 
         // Get the location service from the current context
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
-    }
-
-    public void stopGPS(View view) {
-        if(locationListener != null) {
-            locationManager.removeUpdates(locationListener);
-        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
     }
 
@@ -52,27 +46,22 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
      * @param view ignored
      */
     public void setMaxSpeed(View view) {
-        stopGPS(null);
-        gpsCoordinates.setText("");
 
         if (inputFieldEdittext.getText().length() > 0 && editFieldDistance.getText().length() > 0) {
             // Speed in km/h
             long speed = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
 
-            this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
 
             inputFieldEdittext.setText("");
-
-            maxSpeed.setText("Current max speed: " + speed + " km / t");
-            inputFieldEdittext.setText("");
-
-            maxDistance.setText("Current distance threshold: " + distance + " meters");
             editFieldDistance.setText("");
 
+            maxSpeed.setText("Current max speed: " + speed + " km / t");
+            maxDistance.setText("Current distance threshold: " + distance + " meters");
+
+            this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
             gpsCoordinates.setText("Waiting for GPS signal...");
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         }
     }
