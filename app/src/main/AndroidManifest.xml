@@ -35,6 +35,9 @@
             android:name=".DistanceAccelerometerActivity"
             android:label="@string/title_activity_distance_accelerometer" >
         </activity>
+        <activity
+            android:name=".WaypointCollectorActivity"
+            android:label="@string/title_activity_waypoint_collector"></activity>
     </application>
 
 </manifest>

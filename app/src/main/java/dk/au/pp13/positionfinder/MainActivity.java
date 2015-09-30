@@ -1,7 +1,5 @@
 package dk.au.pp13.positionfinder;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -36,4 +34,8 @@ public class MainActivity extends ActionBarActivity {
         this.startActivity(myIntent);
     }
 
+    public void waypoint_collect(View view) {
+        Intent myIntent = new Intent(this, WaypointCollectorActivity.class);
+        this.startActivity(myIntent);
+    }
 }
