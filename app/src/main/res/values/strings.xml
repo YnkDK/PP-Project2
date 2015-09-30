@@ -22,4 +22,5 @@
     <string name="waypoint_collector">Waypoint collector</string>
     <string name="collect_waypoint">Collect waypoint</string>
     <string name="collect">SET WAYPOINT HERE</string>
+    <string name="current_initial_movement">Movement: N/A</string>
 </resources>

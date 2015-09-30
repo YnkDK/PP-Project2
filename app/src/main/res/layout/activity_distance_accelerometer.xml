@@ -1,26 +1,52 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="dk.au.pp13.positionfinder.DistanceAccelerometerActivity">
 
     <EditText
-        android:id="@+id/inputFieldThreshold"
+        android:id="@+id/inputFieldDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Acc. Threshold"
+        android:hint="@string/distance_threshold"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:inputType="number" />
 
     <Button
-        android:layout_below="@+id/inputFieldThreshold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Threshold"
+        android:text="@string/set_distance"
         android:textAllCaps="false"
-        android:onClick="setThreshold" />
+        android:onClick="setDistance" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/maxDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/current_initial_distance_threshold" />
+
+    <TextView
+        android:id="@+id/movementBool"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/current_initial_movement" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gps_coordinates"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/gpsCoordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_green_dark" />
+</LinearLayout>

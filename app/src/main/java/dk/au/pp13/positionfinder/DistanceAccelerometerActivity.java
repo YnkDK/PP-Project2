@@ -5,41 +5,67 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.v7.app.ActionBarActivity;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import dk.au.pp13.positionfinder.filters.AccelerometerFilter;
 
 
 public class DistanceAccelerometerActivity extends ActionBarActivity implements SensorEventListener {
 
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
     private float lastX = 0, lastY = 0, lastZ = 0;
-    private float threshold;
-    private EditText thresholdText;
+    private final float THRESHOLD = 4;
+    private AccelerometerFilter filter;
+    private TextView gpsCoordinates;
+    private TextView maxDistance;
+    private EditText editFieldDistance;
+    private LocationManager locationManager;
+    private GPSListener locationListener;
+    private TextView movementBool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distance_accelerometer);
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_UI);
 
-        thresholdText = (EditText) findViewById(R.id.inputFieldThreshold);
+        filter = null;
+
+        gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
+        maxDistance = (TextView) findViewById(R.id.maxDistance);
+        movementBool = (TextView) findViewById(R.id.movementBool);
+        editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
+
+        gpsCoordinates.setText("Waiting for GPS...");
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new GPSListener(gpsCoordinates);
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+                locationListener);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(Math.abs(lastX - sensorEvent.values[0]) > threshold ||
-           Math.abs(lastY - sensorEvent.values[1]) > threshold ||
-           Math.abs(lastZ - sensorEvent.values[2]) > threshold) {
-            Toast.makeText(getBaseContext(), "MOVEMENT", Toast.LENGTH_SHORT).show();
+        if (Math.abs(lastX - sensorEvent.values[0]) > THRESHOLD ||
+                Math.abs(lastY - sensorEvent.values[1]) > THRESHOLD ||
+                Math.abs(lastZ - sensorEvent.values[2]) > THRESHOLD) {
+            if (filter != null) {
+                filter.movement();
+                movementBool.setText("Movement: YES");
+            }
+        } else {
+            if (filter != null) {
+                filter.noMovement();
+                movementBool.setText("Movement: no.");
+            }
         }
 
         lastX = sensorEvent.values[0];
@@ -52,7 +78,14 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
 
     }
 
-    public void setThreshold(View view) {
-        threshold = Integer.valueOf(thresholdText.getText().toString());
+    public void setDistance(View view) {
+        if (editFieldDistance.getText().length() > 0) {
+            long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
+            filter = new AccelerometerFilter(distance);
+            this.locationListener.setFilter(filter);
+
+            maxDistance.setText("Current distance threshold: " + distance + " meters");
+            editFieldDistance.setText("");
+        }
     }
 }
