@@ -55,9 +55,9 @@ public class PeriodicActivity extends AppCompatActivity {
         }
     }
 
-    public void stopGPS(View view) {
-        if(locationListener != null) {
-//            locationManager.removeUpdates(locationListener);
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        locationManager.removeUpdates(locationListener);
     }
 }

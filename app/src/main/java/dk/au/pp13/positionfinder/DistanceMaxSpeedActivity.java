@@ -18,6 +18,7 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
     private GPSListener locationListener;
     private TextView maxDistance;
     private EditText editFieldDistance;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
         editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
 
         // Get the location service from the current context
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
@@ -65,5 +66,11 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
 
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        locationManager.removeUpdates(locationListener);
     }
 }

@@ -23,6 +23,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     private EditText editFieldDistance;
     private GPSListener locationListener;
     private TextView movementBool;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
 
         gpsCoordinates.setText("Waiting for GPS...");
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
@@ -87,5 +88,11 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
             maxDistance.setText("Current distance threshold: " + distance + " meters");
             editFieldDistance.setText("");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        locationManager.removeUpdates(locationListener);
     }
 }

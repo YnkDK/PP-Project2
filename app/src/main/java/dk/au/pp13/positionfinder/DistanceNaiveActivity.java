@@ -15,6 +15,7 @@ public class DistanceNaiveActivity extends ActionBarActivity {
     private GPSListener locationListener = null;
     private EditText editFieldDistance;
     private TextView maxDistance;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class DistanceNaiveActivity extends ActionBarActivity {
         editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
 
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
                 locationListener);
@@ -45,5 +46,11 @@ public class DistanceNaiveActivity extends ActionBarActivity {
             maxDistance.setText("Current distance threshold: " + distance + " meters");
             editFieldDistance.setText("");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        locationManager.removeUpdates(locationListener);
     }
 }

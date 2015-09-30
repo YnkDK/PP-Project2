@@ -15,6 +15,7 @@ import dk.au.pp13.positionfinder.filters.ImpenetrableFilter;
 public class WaypointCollectorActivity extends ActionBarActivity {
     private TextView gpsCoordinates;
     private GPSListener locationListener;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class WaypointCollectorActivity extends ActionBarActivity {
         gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
 
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
         locationListener.setLogger(new HTTPFix("Waypoint"));
         locationListener.setFilter(new ImpenetrableFilter());
@@ -39,5 +40,11 @@ public class WaypointCollectorActivity extends ActionBarActivity {
     public void collect(View view) {
         gpsCoordinates.setText("Getting waypoint...");
         this.locationListener.setFilter(new ImpenetrableFilter());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        locationManager.removeUpdates(locationListener);
     }
 }
