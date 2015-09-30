@@ -2,13 +2,13 @@ package dk.au.pp13.positionfinder;
 
 import android.content.Context;
 import android.location.LocationManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import dk.au.pp13.positionfinder.filters.MaxSpeedFilter;
 
 
 public class DistanceMaxSpeedActivity extends ActionBarActivity {
@@ -17,6 +17,8 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
     private EditText inputFieldEdittext;
     private LocationManager locationManager;
     private GPSListener locationListener;
+    private TextView maxDistance;
+    private EditText editFieldDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
         this.maxSpeed = (TextView) findViewById(R.id.maxSpeed);
         this.inputFieldEdittext = (EditText) findViewById(R.id.inputFieldTimeInSec);
         this.gpsCoordinates = (TextView) findViewById(R.id.gpsCoordinates);
+
+        maxDistance = (TextView) findViewById(R.id.maxDistance);
+        editFieldDistance = (EditText) findViewById(R.id.inputFieldDistance);
 
         // Get the location service from the current context
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -47,27 +52,27 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
      * @param view ignored
      */
     public void setMaxSpeed(View view) {
-        // TODO: Should be configurable
-        // 10 meters in km
-        final double DISTANCE = 10.0 / 1000;
-
         stopGPS(null);
         gpsCoordinates.setText("");
 
-        if (inputFieldEdittext.getText().length() > 0) {
+        if (inputFieldEdittext.getText().length() > 0 && editFieldDistance.getText().length() > 0) {
             // Speed in km/h
             long speed = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
+            long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
 
-            double hours = DISTANCE / speed;
-            long milliseconds = (long) (hours * 3600000);
+            this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
+
+            inputFieldEdittext.setText("");
 
             maxSpeed.setText("Current max speed: " + speed + " km / t");
             inputFieldEdittext.setText("");
+
+            maxDistance.setText("Current distance threshold: " + distance + " meters");
+            editFieldDistance.setText("");
+
             gpsCoordinates.setText("Waiting for GPS signal...");
 
-
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, milliseconds, 0,
-                    locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         }
     }

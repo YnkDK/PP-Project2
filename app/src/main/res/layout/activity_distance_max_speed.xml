@@ -33,6 +33,15 @@
         android:inputType="number"
         />
 
+    <EditText
+        android:id="@+id/inputFieldDistance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/distance_threshold"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:inputType="number" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +57,13 @@
         android:textSize="18sp"
         android:text="@string/current_initial_max_speed"
         />
+
+    <TextView
+        android:id="@+id/maxDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/current_initial_distance_threshold" />
 
     <TextView
         android:layout_width="wrap_content"

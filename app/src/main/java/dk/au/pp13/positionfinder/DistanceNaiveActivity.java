@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import dk.au.pp13.positionfinder.filters.HaversineFilter;
+
 
 public class DistanceNaiveActivity extends ActionBarActivity {
     private TextView gpsCoordinates;

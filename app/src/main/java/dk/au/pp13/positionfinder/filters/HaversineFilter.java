@@ -1,4 +1,4 @@
-package dk.au.pp13.positionfinder;
+package dk.au.pp13.positionfinder.filters;
 
 import android.location.Location;
 
@@ -10,7 +10,7 @@ public class HaversineFilter implements Filter {
     /**
      * @param threshold The distance in meters, in which two locations should have moved
      */
-    HaversineFilter(double threshold) {
+    public HaversineFilter(double threshold) {
         this.threshold = threshold;
     }
 

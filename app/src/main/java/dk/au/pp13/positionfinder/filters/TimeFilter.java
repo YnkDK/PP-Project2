@@ -1,4 +1,4 @@
-package dk.au.pp13.positionfinder;
+package dk.au.pp13.positionfinder.filters;
 
 import android.location.Location;
 
@@ -13,7 +13,7 @@ public class TimeFilter implements Filter {
     /**
      * @param threshold The distance in seconds, in which two locations should have changed
      */
-    TimeFilter(long threshold) {
+    public TimeFilter(long threshold) {
         this.threshold = threshold * 1000;
     }
 

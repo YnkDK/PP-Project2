@@ -5,6 +5,8 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import dk.au.pp13.positionfinder.filters.Filter;
+
 /**
  * Created by CasperC on 9/23/15.
  */

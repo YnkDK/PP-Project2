@@ -1,4 +1,4 @@
-package dk.au.pp13.positionfinder;
+package dk.au.pp13.positionfinder.filters;
 
 import android.location.Location;
 
