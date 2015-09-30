@@ -9,15 +9,26 @@ import android.widget.TextView;
  * Created by CasperC on 9/23/15.
  */
 public class GPSListener implements LocationListener {
+    private Filter filter;
+
     private TextView textView;
+    private Location lastGoodFix;
 
     public GPSListener(TextView view) {
         this.textView = view;
+        this.lastGoodFix = null;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        textView.setText(location.toString());
+        if (lastGoodFix == null || filter.passesFilter(lastGoodFix, location)) {
+            textView.setText(location.toString());
+            lastGoodFix = location;
+        }
     }
 
     @Override

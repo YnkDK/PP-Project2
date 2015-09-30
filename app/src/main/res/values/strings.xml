@@ -8,6 +8,7 @@
     <string name="title_activity_distance_max_speed">DistanceMaxSpeedActivity</string>
     <string name="title_activity_distance_accelerometer">DistanceAccelerometerActivity</string>
     <string name="toggle_gps">Toggle GPS</string>
+    <string name="distance_threshold">Distance threshold (meters)</string>
     <string name="naive_reporting">Naive reporting</string>
     <string name="gps_coordinates">GPS coordinates:</string>
     <string name="max_speed_reporting">Max speed reporting</string>
@@ -15,4 +16,6 @@
     <string name="max_speed_input">Max speed in km/h</string>
     <string name="set_max_speed">Set max speed</string>
     <string name="current_initial_max_speed">Current max speed: N/A</string>
+    <string name="set_distance">Set distance and start</string>
+    <string name="current_initial_distance_threshold">Current distance threshold: N/A</string>
 </resources>
