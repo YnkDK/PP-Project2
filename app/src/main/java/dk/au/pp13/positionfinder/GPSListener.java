@@ -30,7 +30,9 @@ public class GPSListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (lastGoodFix == null || filter.passesFilter(lastGoodFix, location)) {
+        if (filter == null || logger == null) {
+            textView.setText("Found GPS - waiting on user");
+        } else if (lastGoodFix == null || filter.passesFilter(lastGoodFix, location)) {
             textView.setText(location.toString());
             lastGoodFix = location;
 
