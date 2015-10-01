@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import dk.au.pp13.positionfinder.filters.TimeFilter;
 
@@ -67,6 +68,7 @@ public class PeriodicActivity extends AppCompatActivity {
     public void sendWaypoint(View view) {
         if (fixer != null) {
             fixer.waypoint();
+            Toast.makeText(this, "Waypoint send!", Toast.LENGTH_SHORT).show();
         }
     }
 }

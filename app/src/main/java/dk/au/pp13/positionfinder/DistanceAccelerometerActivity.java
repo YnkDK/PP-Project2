@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import dk.au.pp13.positionfinder.filters.AccelerometerFilter;
 
@@ -102,6 +103,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     public void sendWaypoint(View view) {
         if (fixer != null) {
             fixer.waypoint();
+            Toast.makeText(this, "Waypoint send!", Toast.LENGTH_SHORT).show();
         }
     }
 }
