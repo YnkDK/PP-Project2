@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class HTTPFix extends AsyncTask<String, Void, String> {
     private final String sessionid;
-    private static final HTTPFix FIXER = new HTTPFix();
 
     public HTTPFix(String task) {
         sessionid = task + "-sessionStart" + System.currentTimeMillis();
@@ -35,7 +34,7 @@ public class HTTPFix extends AsyncTask<String, Void, String> {
 
     public void log(Location location) {
         // Create a new HttpClient and Post Header
-        FIXER.execute(
+        new HTTPFix().execute(
                 "log",
                 Double.toString(location.getLatitude()),
                 Double.toString(location.getLongitude()),
@@ -46,9 +45,11 @@ public class HTTPFix extends AsyncTask<String, Void, String> {
     }
 
     public void waypoint() {
-        FIXER.execute(
+        new HTTPFix().execute(
                 "waypoint",
-                Long.toString(System.currentTimeMillis())
+                Long.toString(System.currentTimeMillis()),
+                sessionid
+
         );
     }
 
