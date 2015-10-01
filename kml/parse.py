@@ -49,6 +49,9 @@ with open(sys.argv[1]) as f:
 			addPoint((int(timestamp), None))
 # Sort points by timestamp
 points.sort()
+# We assume that we go in circles, thus if the last is a waypoint, use the first measurement
+if points[-1][1] is None:
+	points.append(points[0])
 
 coord = "\n"
 
