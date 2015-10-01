@@ -9,21 +9,21 @@ import android.location.Location;
 public class MaxSpeedFilter implements Filter {
 
     private final TimeFilter timeFilter;
+    private final HaversineFilter distanceFilter;
 
 
     /**
-     * @param distance   Distance in meters
-     * @param speedInKmH Speed in km/h
+     * @param distance          Distance in meters
+     * @param speedInMeterPrSec Speed in m/s
      */
-    public MaxSpeedFilter(double distance, double speedInKmH) {
-        // TODO: Check that this is actually correct
-        double hours = (distance / 1000.) / speedInKmH;
-        long milliseconds = (long) (hours * 3600);
-        timeFilter = new TimeFilter(milliseconds);
+    public MaxSpeedFilter(double distance, double speedInMeterPrSec) {
+        long seconds = (long) (distance / speedInMeterPrSec);
+        timeFilter = new TimeFilter(seconds);
+        distanceFilter = new HaversineFilter(distance);
     }
 
     @Override
     public boolean passesFilter(Location l1, Location l2) {
-        return timeFilter.passesFilter(l1, l2);
+        return timeFilter.passesFilter(l1, l2) && distanceFilter.passesFilter(l1, l2);
     }
 }

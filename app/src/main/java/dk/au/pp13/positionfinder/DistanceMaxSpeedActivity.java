@@ -51,23 +51,21 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
     public void setMaxSpeed(View view) {
 
         if (inputFieldEdittext.getText().length() > 0 && editFieldDistance.getText().length() > 0) {
-            // Speed in km/h
+            // Speed in m/s
             long speed = Long.parseLong(String.valueOf(inputFieldEdittext.getText()));
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
-
+            double KM_PR_HOUR_TO_METER_PR_SECOND = 3.6;
 
             inputFieldEdittext.setText("");
             editFieldDistance.setText("");
 
-            maxSpeed.setText("Current max speed: " + speed + " km / t");
+            maxSpeed.setText("Current max speed: " + speed + " m/s");
             maxDistance.setText("Current distance threshold: " + distance + " meters");
             fixer = new HTTPFix("MaxSpeed-speed" + speed + "-distance" + distance);
             locationListener.setLogger(fixer);
 
-            this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
+            this.locationListener.setFilter(new MaxSpeedFilter(distance, speed*KM_PR_HOUR_TO_METER_PR_SECOND));
             gpsCoordinates.setText("Waiting for GPS signal...");
-
-
         }
     }
 

@@ -14,7 +14,7 @@
     <string name="gps_coordinates">GPS coordinates:</string>
     <string name="max_speed_reporting">Max speed reporting</string>
     <string name="stop_gps">Stop GPS</string>
-    <string name="max_speed_input">Max speed in km/h</string>
+    <string name="max_speed_input">Max speed in m/s</string>
     <string name="set_max_speed">Set and start</string>
     <string name="current_initial_max_speed">Current max speed: N/A</string>
     <string name="set_distance">Set distance and start</string>
