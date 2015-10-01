@@ -24,6 +24,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     private GPSListener locationListener;
     private TextView movementBool;
     private LocationManager locationManager;
+    private HTTPFix fixer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
 
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
                 locationListener);
+        fixer = null;
     }
 
     @Override
@@ -80,7 +82,8 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     public void setDistance(View view) {
         if (editFieldDistance.getText().length() > 0) {
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
-            locationListener.setLogger(new HTTPFix("Accelerometer-distance" + distance));
+            fixer = new HTTPFix("Accelerometer-distance" + distance);
+            locationListener.setLogger(fixer);
 
             filter = new AccelerometerFilter(distance);
             this.locationListener.setFilter(filter);
@@ -94,5 +97,11 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
     public void onBackPressed() {
         super.onBackPressed();
         locationManager.removeUpdates(locationListener);
+    }
+
+    public void sendWaypoint(View view) {
+        if (fixer != null) {
+            fixer.waypoint();
+        }
     }
 }

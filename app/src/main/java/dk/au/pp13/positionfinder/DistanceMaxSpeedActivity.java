@@ -19,6 +19,7 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
     private TextView maxDistance;
     private EditText editFieldDistance;
     private LocationManager locationManager;
+    private HTTPFix fixer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new GPSListener(gpsCoordinates);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        fixer = null;
 
     }
 
@@ -59,12 +61,19 @@ public class DistanceMaxSpeedActivity extends ActionBarActivity {
 
             maxSpeed.setText("Current max speed: " + speed + " km / t");
             maxDistance.setText("Current distance threshold: " + distance + " meters");
-            locationListener.setLogger(new HTTPFix("MaxSpeed-speed" + speed + "-distance" + distance));
+            fixer = new HTTPFix("MaxSpeed-speed" + speed + "-distance" + distance);
+            locationListener.setLogger(fixer);
 
             this.locationListener.setFilter(new MaxSpeedFilter(distance, speed));
             gpsCoordinates.setText("Waiting for GPS signal...");
 
 
+        }
+    }
+
+    public void sendWaypoint(View view) {
+        if (fixer != null) {
+            fixer.waypoint();
         }
     }
 

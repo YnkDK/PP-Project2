@@ -19,6 +19,7 @@ public class PeriodicActivity extends AppCompatActivity {
 
     private LocationManager locationManager = null;
     private GPSListener locationListener = null;
+    private HTTPFix fixer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class PeriodicActivity extends AppCompatActivity {
         locationListener = new GPSListener(gpsCoordinates);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
                 locationListener);
+        fixer = null;
     }
 
     public void setPeriodicTime(View view) {
@@ -46,7 +48,8 @@ public class PeriodicActivity extends AppCompatActivity {
                 inputFieldEdittext.setText("");
                 gpsCoordinates.setText("Waiting for GPS signal...");
 
-                locationListener.setLogger(new HTTPFix("Periodic-interval" + time));
+                fixer = new HTTPFix("Periodic-interval" + time);
+                locationListener.setLogger(fixer);
 
                 locationListener.setFilter(new TimeFilter(time));
 
@@ -59,5 +62,11 @@ public class PeriodicActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         locationManager.removeUpdates(locationListener);
+    }
+
+    public void sendWaypoint(View view) {
+        if (fixer != null) {
+            fixer.waypoint();
+        }
     }
 }

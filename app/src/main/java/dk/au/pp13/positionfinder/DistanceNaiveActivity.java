@@ -16,6 +16,7 @@ public class DistanceNaiveActivity extends ActionBarActivity {
     private EditText editFieldDistance;
     private TextView maxDistance;
     private LocationManager locationManager;
+    private HTTPFix fixer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class DistanceNaiveActivity extends ActionBarActivity {
         locationListener = new GPSListener(gpsCoordinates);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
                 locationListener);
+        fixer = null;
         gpsCoordinates.setText("Waiting for GPS...");
 
     }
@@ -39,12 +41,19 @@ public class DistanceNaiveActivity extends ActionBarActivity {
     public void setDistance(View view) {
         if (editFieldDistance.getText().length() > 0) {
             long distance = Long.parseLong(String.valueOf(editFieldDistance.getText()));
-            locationListener.setLogger(new HTTPFix("DistanceNaive-distance" + distance));
+            fixer = new HTTPFix("DistanceNaive-distance" + distance);
+            locationListener.setLogger(fixer);
 
             this.locationListener.setFilter(new HaversineFilter(distance));
 
             maxDistance.setText("Current distance threshold: " + distance + " meters");
             editFieldDistance.setText("");
+        }
+    }
+
+    public void sendWaypoint(View view) {
+        if (fixer != null) {
+            fixer.waypoint();
         }
     }
 

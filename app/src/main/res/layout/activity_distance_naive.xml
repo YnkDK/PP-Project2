@@ -31,6 +31,13 @@
         android:textAllCaps="false"
         android:onClick="setDistance" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_waypoint"
+        android:textAllCaps="false"
+        android:onClick="sendWaypoint" />
+
     <TextView
         android:id="@+id/maxDistance"
         android:layout_width="wrap_content"
