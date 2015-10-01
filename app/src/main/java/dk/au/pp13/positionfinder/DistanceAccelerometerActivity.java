@@ -19,6 +19,7 @@ import dk.au.pp13.positionfinder.filters.AccelerometerFilter;
 public class DistanceAccelerometerActivity extends ActionBarActivity implements SensorEventListener {
 
     private float lastX = 0, lastY = 0, lastZ = 0;
+    private long lastMovement = 0;
     private AccelerometerFilter filter;
     private TextView maxDistance;
     private EditText editFieldDistance;
@@ -62,9 +63,10 @@ public class DistanceAccelerometerActivity extends ActionBarActivity implements 
             if (filter != null) {
                 filter.movement();
                 movementBool.setText("Movement: YES");
+                lastMovement = sensorEvent.timestamp;
             }
         } else {
-            if (filter != null) {
+            if (filter != null && sensorEvent.timestamp - lastMovement > 1500000000) {
                 filter.noMovement();
                 movementBool.setText("Movement: no.");
             }
